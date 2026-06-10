@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>web4AI Marketing Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f1117;
+      --surface: #1a1d27;
+      --border: #2a2f3d;
+      --text: #e8eaed;
+      --muted: #9aa0a6;
+      --accent: #6c9eff;
+      --green: #34d399;
+      --yellow: #fbbf24;
+      --red: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+      padding: 2rem;
+    }
+    header {
+      margin-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 1.5rem;
+    }
+    h1 { font-size: 1.75rem; font-weight: 600; }
+    .subtitle { color: var(--muted); margin-top: 0.25rem; }
+    .meta { color: var(--muted); font-size: 0.875rem; margin-top: 0.5rem; }
+    .master-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+    }
+    .master-card h2 { font-size: 1rem; color: var(--accent); margin-bottom: 0.5rem; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--surface);
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th, td {
+      text-align: left;
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      background: #14171f;
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-weight: 600;
+    }
+    tr:last-child td { border-bottom: none; }
+    .status {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .status-active { background: rgba(52, 211, 153, 0.15); color: var(--green); }
+    .status-pending { background: rgba(251, 191, 36, 0.15); color: var(--yellow); }
+    .status-blocked { background: rgba(248, 113, 113, 0.15); color: var(--red); }
+    .metrics { font-size: 0.8rem; color: var(--muted); }
+    .metrics span { display: inline-block; margin-right: 0.75rem; }
+    .blockers { color: var(--red); font-size: 0.8rem; }
+    .empty { color: var(--muted); font-style: italic; }
+    footer { margin-top: 2rem; color: var(--muted); font-size: 0.8rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>web4AI Marketing Dashboard</h1>
+    <p class="subtitle">Lead Generator channel rollup — agent-ready website extraction</p>
+    <p class="meta" id="updated-at">Loading…</p>
+  </header>
+
+  <div class="master-card" id="master-card">
+    <h2>Master Agent</h2>
+    <p id="master-info">Loading…</p>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Channel</th>
+        <th>Sub-Agent</th>
+        <th>Status</th>
+        <th>ICP</th>
+        <th>Activation Path</th>
+        <th>Key Metrics</th>
+        <th>Last Activity</th>
+        <th>Blockers</th>
+      </tr>
+    </thead>
+    <tbody id="channels-body">
+      <tr><td colspan="8">Loading channel data…</td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    Data source: <code>dashboard/marketing/channels.json</code> — updated by Lead Generator master agent after each heartbeat.
+  </footer>
+
+  <script>
+    function statusClass(status) {
+      if (status === 'active' || status === 'running') return 'status-active';
+      if (status === 'blocked') return 'status-blocked';
+      return 'status-pending';
+    }
+
+    function formatMetrics(metrics) {
+      return Object.entries(metrics)
+        .map(([k, v]) => `<span>${k}: <strong>${v}</strong></span>`)
+        .join('');
+    }
+
+    fetch('channels.json')
+      .then(r => r.json())
+      .then(data => {
+        document.getElementById('updated-at').textContent =
+          `Last updated: ${data.updatedAt} by ${data.updatedBy}`;
+
+        const master = data.masterAgent;
+        document.getElementById('master-info').innerHTML =
+          `<strong>${master.name}</strong> — status: <span class="status ${statusClass(master.status)}">${master.status}</span>`;
+
+        const tbody = document.getElementById('channels-body');
+        tbody.innerHTML = data.channels.map(ch => `
+          <tr>
+            <td><strong>${ch.name}</strong></td>
+            <td>${ch.agentName}</td>
+            <td><span class="status ${statusClass(ch.status)}">${ch.status}</span></td>
+            <td>${ch.icp}</td>
+            <td>${ch.activationPath}</td>
+            <td class="metrics">${formatMetrics(ch.leadingMetrics)}</td>
+            <td>${ch.lastActivity}</td>
+            <td class="blockers">${ch.blockers.length ? ch.blockers.join(', ') : '<span class="empty">None</span>'}</td>
+          </tr>
+        `).join('');
+      })
+      .catch(err => {
+        document.getElementById('channels-body').innerHTML =
+          `<tr><td colspan="8">Failed to load channels.json: ${err.message}</td></tr>`;
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+[project]
+name = "web4ai"
+version = "0.1.0"
+description = "Agent-ready web extraction: markdown + action sets from any URL"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.32.0",
+    "httpx>=0.28.0",
+    "beautifulsoup4>=4.12.0",
+    "lxml>=5.3.0",
+    "trafilatura>=2.0.0",
+    "markdownify>=0.14.0",
+    "tiktoken>=0.8.0",
+    "pydantic>=2.10.0",
+    "pydantic-settings>=2.6.0",
+]
+
+[project.optional-dependencies]
+browser = ["playwright>=1.49.0"]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.24.0",
+    "pytest-timeout>=2.3.0",
+    "httpx>=0.28.0",
+    "ruff>=0.8.0",
+    "playwright>=1.49.0",
+]
+
+[project.scripts]
+web4ai = "web4ai.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/web4ai"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+markers = [
+    "integration: hits live URLs (skipped in default CI)",
+    "browser: requires Playwright browsers installed",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]

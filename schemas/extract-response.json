@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web4ai.dev/schemas/extract-response.json",
+  "title": "ExtractResponse",
+  "type": "object",
+  "required": ["url", "final_url", "fetched_at", "extraction_id"],
+  "properties": {
+    "extraction_id": { "$ref": "common.json#/$defs/ExtractionId" },
+    "url": { "$ref": "common.json#/$defs/Url" },
+    "final_url": { "$ref": "common.json#/$defs/Url" },
+    "fetched_at": { "$ref": "common.json#/$defs/IsoDateTime" },
+    "markdown": { "type": "string" },
+    "actions": {
+      "type": "array",
+      "items": {
+        "oneOf": [
+          { "$ref": "action.json#/$defs/ActionMinimal" },
+          { "$ref": "action.json#/$defs/ActionFull" }
+        ]
+      }
+    },
+    "suppressed": {
+      "type": "array",
+      "description": "Present when include_suppressed=true",
+      "items": {
+        "type": "object",
+        "required": ["accessible_name", "role", "reason"],
+        "properties": {
+          "accessible_name": { "type": "string" },
+          "role": { "type": "string" },
+          "reason": {
+            "type": "string",
+            "enum": [
+              "noise",
+              "duplicate",
+              "destructive",
+              "dead",
+              "low_confidence"
+            ]
+          }
+        }
+      }
+    },
+    "session_id": {
+      "$ref": "common.json#/$defs/SessionId",
+      "description": "Session to pass to subsequent act calls on this page"
+    },
+    "meta": {
+      "type": "object",
+      "required": ["strategy", "cache"],
+      "properties": {
+        "strategy": {
+          "type": "string",
+          "enum": ["static", "render", "render_with_proxy", "cache"]
+        },
+        "cache": {
+          "type": "string",
+          "enum": ["hit", "miss", "revalidated"]
+        },
+        "template_fingerprint": {
+          "type": "string",
+          "pattern": "^tpl_[a-f0-9]{8,16}$"
+        },
+        "tokens": { "$ref": "common.json#/$defs/TokenCounts" },
+        "timings_ms": { "$ref": "common.json#/$defs/TimingsMs" },
+        "actions_mode": { "$ref": "common.json#/$defs/ActionsMode" },
+        "actions_profile": { "$ref": "common.json#/$defs/ActionsProfile" },
+        "probed_count": { "type": "integer", "minimum": 0 },
+        "verified_count": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,145 @@
+{
+  "markdown": "[Try it now \u2192](https://docs.firecrawl.dev/features/monitoring)\n\ncompanies of all sizes\n\nChoose Firecrawl when you need one API to search, crawl, and extract. It converts complex pages to clean markdown or structured JSON for RAG, and it is one of the fastest web extraction APIs for production pipelines.\n\nChoose Tavily when you need real-time web search with AI-ranked results or summary-first retrieval. Less suited for deep site-wide crawling or full-page extraction at scale.\n\n[Learn more](https://docs.firecrawl.dev/introduction)\n\n### Firecrawl vs. Tavily: Key Differences\n\n| Feature | Firecrawl | Tavily |\n|---|---|---|\n| Output formats | Markdown, JSON, HTML, screenshots, links, summary, branding | Markdown, text, raw content with relevance scores |\n| Search capabilities | Search API with optional scraping, result types (web, news, images), and category filters | Real-time multi-source search with ranking |\n| Free tier | 1,000 credits/month | 1,000 credits/month |\n| Entry pricing | $16/month (5,000 credits) | $30/month (4,000 credits) |\n| Mid-tier pricing | $83/month (100,000 credits) | $0.008/credit PAYG (~$800 for 100k) |\n| Best for | Search, site crawling, structured data extraction, RAG pipelines | AI search, research agents, multi-source retrieval |\n\nLast updated: Jan 22, 2026 \u2022 [See full matrix \u2193](https://www.firecrawl.dev#full-comparison)\n\n### Firecrawl vs. Tavily: Full comparison matrix\n\nHere's a complete feature overview of Firecrawl vs. Tavily.\n\n| Feature | Firecrawl | Tavily | What this means |\n|---|---|---|---|\n| Output formats | Markdown, JSON, HTML, screenshots, links, summary, branding | Markdown, text, raw content with metadata | Both support markdown output. Firecrawl offers more format options. |\n| When it matters Important for RAG pipelines and downstream processing. Trade-offs Firecrawl's broader formats give flexibility; Tavily's narrower formats are simpler but less adaptable. | |||\n| Search API | Built-in /search with optional scraping, web/news/images sources, category filters, plus /agent for hard-to-reach data | Search-first API with ranking and citations | Both support search workflows. Firecrawl keeps discovery, crawling, and extraction in one platform, and /agent finds data in hard-to-reach places for lead gen and dataset curation. |\n| When it matters Best when you want search and full-page extraction without stitching multiple tools together. Trade-offs Tavily stays search-first, so deeper crawling and extraction typically require additional tooling. | |||\n| Schema extraction | Natural language prompts + JSON Schema | Natural language prompts + optional schemas | Both support prompt-based and structured extraction. Firecrawl combines prompts, schema extraction, and an agent that can search for sources directly. |\n| When it matters Essential for building structured datasets and agent workflows. Trade-offs Schema-based extraction is more precise. Prompt-only flows can need extra validation. | |||\n| RAG optimization | Clean markdown with preserved structure | Relevance scoring + citations | Firecrawl prioritizes full-page content quality for ingestion. Tavily adds search ranking and citations for agent context. |\n| When it matters Best when building durable knowledge bases versus quick retrieval. Trade-offs Full content is more comprehensive but slower. Ranked results are faster but can be less complete. | |||\n| Concurrency control | Plan-based limits (2 to 100+ concurrent browsers) | Rate limits (100 RPM dev, 1,000 RPM prod) | Firecrawl gives plan-based browser concurrency for predictable throughput. Tavily uses request-per-minute limits with backend auto-scaling. |\n| When it matters Important for high-throughput scraping and search workloads. Trade-offs Plan-based concurrency offers predictable throughput. RPM limits are simpler but can cap burst capacity. | |||\n| Proxy support | Can configure own proxies, if required | Not documented | Firecrawl can route through your proxies for control and compliance; Tavily uses internal infrastructure. |\n| When it matters Essential for geo-restricted content or avoiding IP bans. Trade-offs Proxies add complexity and cost. Managed infrastructure is simpler and lets you focus on your business logic. | |||\n| Batch API | Yes (async jobs + webhooks) | No (request-response only) | Firecrawl can process thousands of URLs asynchronously with webhooks; Tavily requires request-response workflows. |\n| When it matters Essential for large-scale scraping (10k+ pages). Trade-offs Async workflows require webhook handling, but scale better for large jobs. | |||\n| Free tier | 1,000 credits/month | 1,000 credits/month | Both offer matching free plans to test and evaluate fit for your use case. |\n| When it matters Important for testing and low-volume use cases. Trade-offs Free credits are great for prototyping; compare limits and pricing once you scale. | |||\n| Entry pricing | $16/month (5,000 credits) | $30/month (4,000 credits) | Firecrawl's entry plan is cheaper and includes more credits at this tier. |\n| When it matters Important for early-stage projects and startups. Trade-offs Lower entry cost helps early pilots; evaluate features needed beyond price. | |||\n| High-volume pricing | $83/month (100k credits) | $0.008/credit PAYG (~$800 for 100k) | Firecrawl offers fixed monthly plans that are 10\u00d7 cheaper at 100k volume, and gets even cheaper on Enterprise. Tavily's PAYG suits variable usage. |\n| When it matters Critical for production deployments and high-volume scraping. Trade-offs Monthly plans require usage estimation. PAYG offers flexibility but can be costly at scale. | |||\n| SDKs & integrations | Python, Node.js, Rust, Go + LangChain, LlamaIndex, Lovable, n8n, Zapier, Make, MCP | Python (async) + LangChain, LlamaIndex, n8n,Zapier, Make,MCP | Both support major LLM frameworks. Firecrawl has more language SDKs for broader integration. |\n| When it matters Important for integration into existing tech stacks. Trade-offs More SDKs reduce custom wrapper work. Fewer SDKs can mean more glue code. | |||\n| Documentation quality | Comprehensive (guides + API ref) | Basic (API ref only) | Firecrawl has more examples and tutorials; Tavily is leaner. |\n| When it matters Important for onboarding and troubleshooting. Trade-offs Fewer examples and tutorials can mean more time debugging and figuring out workflows. | |||\n| Community & support | Community forum, GitHub, email | Discord, Email | Both Firecrawl and Tavily have active communities and support channels. |\n| When it matters Important if you need fast answers or peer help. Trade-offs Community support varies in quality; email is slower but official. | |||\n\nClick any row to see when it matters and trade-offs\n\n### Firecrawl vs. Tavily: Benchmarks\n\nReal-world performance comparison of Firecrawl vs. Tavily.\n\n| Metric | Firecrawl | Tavily |\n|---|---|---|\n| Coverage (Success Rate) | 77.2% | 67.8% |\n| Quality (F1 Score) | 0.638 | 0.494 |\n| P50 Latency (ms) | 1012 | 1638 |\n| P95 Latency (ms) | 3387 | 7339 |\n| $/scrape | $0.0063 | $0.0080 |\n\nInternally conducted benchmark, run Jan 13, 2026. Tested 1,000 URLs drawn from diverse public web domains (news, documentation, e-commerce, finance, and more) and measured whether each tool retrieved at least 10% of the expected content \u2014 defined as core page text, excluding navigation, ads, and footers. Dataset publicly available at the [Firecrawl scrape-content-dataset-v1](https://huggingface.co/datasets/firecrawl/scrape-content-dataset-v1).\n\nLast updated: Jan 13, 2026\n\n[Morgan Linton@morganlinton\"If you're coding with AI, and haven't discovered @firecrawl yet, prepare to have your mind blown \ud83e\udd2f\"](https://x.com/morganlinton/status/1839454165703204955)\n\n[Chris DeWeese@chrisdeweese_\"Started using @firecrawl for a project, I wish I used this sooner.\"](https://x.com/chrisdeweese_/status/1853587120406876601)\n\n[Alex Reibman@AlexReibman\"Moved our internal agent's web scraping tool from Apify to Firecrawl because it benchmarked 50x faster with AgentOps.\"](https://x.com/AlexReibman/status/1780299595484131836)\n\n[Tom - Morpho@TomReppelin\"I found gold today. Thank you @firecrawl\"](https://x.com/TomReppelin/status/1844382491014201613)\n\n[Morgan Linton@morganlinton\"If you're coding with AI, and haven't discovered @firecrawl yet, prepare to have your mind blown \ud83e\udd2f\"](https://x.com/morganlinton/status/1839454165703204955)\n\n[Chris DeWeese@chrisdeweese_\"Started using @firecrawl for a project, I wish I used this sooner.\"](https://x.com/chrisdeweese_/status/1853587120406876601)\n\n[Alex Reibman@AlexReibman\"Moved our internal agent's web scraping tool from Apify to Firecrawl because it benchmarked 50x faster with AgentOps.\"](https://x.com/AlexReibman/status/1780299595484131836)\n\n[Tom - Morpho@TomReppelin\"I found gold today. Thank you @firecrawl\"](https://x.com/TomReppelin/status/1844382491014201613)\n\n[Bardia@thepericulum\"The Firecrawl team ships. I wanted types for their node SDK, and less than an hour later, I got them.\"](https://x.com/thepericulum/status/1781397799487078874)\n\n[Matt Busigin@mbusigin\"Firecrawl is dope. Congrats guys \ud83d\udc4f\"](https://x.com/mbusigin/status/1836065372010656069)\n\n[Sumanth@Sumanth_077\"Web scraping will never be the same!](https://x.com/Sumanth_077/status/1940049003074478511)\n\nFirecrawl is an open-source framework that takes a URL, crawls it, and conver...\"\n\nFirecrawl is an open-source framework that takes a URL, crawls it, and conver...\"\n\n[Steven Tey@steventey\"Open-source Clay alternative just dropped](https://x.com/steventey/status/1932945651761098889)\n\nUpload a CSV of emails and...\"\n\nUpload a CSV of emails and...\"\n\n[Bardia@thepericulum\"The Firecrawl team ships. I wanted types for their node SDK, and less than an hour later, I got them.\"](https://x.com/thepericulum/status/1781397799487078874)\n\n[Matt Busigin@mbusigin\"Firecrawl is dope. Congrats guys \ud83d\udc4f\"](https://x.com/mbusigin/status/1836065372010656069)\n\n[Sumanth@Sumanth_077\"Web scraping will never be the same!](https://x.com/Sumanth_077/status/1940049003074478511)\n\nFirecrawl is an open-source framework that takes a URL, crawls it, and conver...\"\n\nFirecrawl is an open-source framework that takes a URL, crawls it, and conver...\"\n\n[Steven Tey@steventey\"Open-source Clay alternative just dropped](https://x.com/steventey/status/1932945651761098889)\n\nUpload a CSV of emails and...\"\n\nUpload a CSV of emails and...\"\n\n### Fast-moving orgs are building with Firecrawl\n\n[Zapier](https://www.firecrawl.dev/blog/how-zapier-uses-firecrawl-to-power-chatbots)\n\n#### How Zapier uses Firecrawl to Empower Chatbots\n\nDiscover how Zapier uses Firecrawl to empower customers with custom knowledge in their chatbots.\n\n[Retell](https://www.firecrawl.dev/blog/retell-firecrawl-ai-phone-agents)\n\n#### Retell's AI phone agents get LLM-ready content from Firecrawl\n\nHow Retell keeps AI phone agents answering from live, LLM-ready content using Firecrawl's web scraping API.\n\n[Stack AI](https://www.firecrawl.dev/blog/how-stack-ai-uses-firecrawl-to-power-ai-agents)\n\n#### How Stack AI Uses Firecrawl to Power AI Agents\n\nDiscover how Stack AI leverages Firecrawl to seamlessly feed agentic AI workflows with high-quality web data.\n\n[Are you an AI agent? Get an API key here](https://www.firecrawl.dev/agent-onboarding/SKILL.md)",
+  "actions": [
+    {
+      "type": "link",
+      "label": "AI agent tools",
+      "target": "https://www.firecrawl.dev/use-cases/ai-mcps",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'AI agent tools'."
+    },
+    {
+      "type": "link",
+      "label": "About",
+      "target": "https://www.firecrawl.dev/about",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'About'."
+    },
+    {
+      "type": "link",
+      "label": "Affiliates",
+      "target": "https://www.firecrawl.dev/affiliates",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Affiliates'."
+    },
+    {
+      "type": "link",
+      "label": "All Customer Stories",
+      "target": "https://www.firecrawl.dev/blog/category/customer-stories",
+      "method": "GET",
+      "parameters": {},
+      "description": "Follow link to 'All Customer Stories'."
+    },
+    {
+      "type": "link",
+      "label": "Ambassadors",
+      "target": "https://www.firecrawl.dev/ambassadors",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Ambassadors'."
+    },
+    {
+      "type": "link",
+      "label": "Are you an AI agent? Get an API key here",
+      "target": "https://www.firecrawl.dev/agent-onboarding/SKILL.md",
+      "method": "GET",
+      "parameters": {},
+      "description": "Follow link to 'Are you an AI agent? Get an API key here'."
+    },
+    {
+      "type": "link",
+      "label": "Blog",
+      "target": "https://www.firecrawl.dev/blog",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Blog'."
+    },
+    {
+      "type": "link",
+      "label": "Careers",
+      "target": "https://www.firecrawl.dev/careers",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Careers'."
+    },
+    {
+      "type": "link",
+      "label": "Changelog",
+      "target": "https://www.firecrawl.dev/changelog",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Changelog'."
+    },
+    {
+      "type": "link",
+      "label": "Deep research",
+      "target": "https://www.firecrawl.dev/use-cases/deep-research",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Deep research'."
+    },
+    {
+      "type": "link",
+      "label": "Firecrawl Alternatives",
+      "target": "https://www.firecrawl.dev/alternatives",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Firecrawl Alternatives'."
+    },
+    {
+      "type": "link",
+      "label": "Firestarters",
+      "target": "https://www.firecrawl.dev/firestarters",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Firestarters'."
+    },
+    {
+      "type": "link",
+      "label": "Free Tools",
+      "target": "https://www.firecrawl.dev/tools",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Free Tools'."
+    },
+    {
+      "type": "link",
+      "label": "Integrations",
+      "target": "https://www.firecrawl.dev/app",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Integrations'."
+    },
+    {
+      "type": "link",
+      "label": "Lead enrichment",
+      "target": "https://www.firecrawl.dev/use-cases/lead-enrichment",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate via site navigation to 'Lead enrichment'."
+    }
+  ],
+  "meta": {
+    "url": "https://www.firecrawl.dev/alternatives/firecrawl-vs-tavily",
+    "final_url": "https://www.firecrawl.dev/alternatives/firecrawl-vs-tavily",
+    "fetched_at": "2026-06-10T11:35:33.593501Z",
+    "extraction_path": "static",
+    "strategy": "static",
+    "truncated": false,
+    "cached": false,
+    "cached_at": null,
+    "tokens": {
+      "markdown": 2750
+    },
+    "timings_ms": {
+      "fetch": 1372.3961249925196,
+      "extract": 489.7765000059735,
+      "actions": 30.039124976610765,
+      "total": 1962.7863329951651
+    }
+  },
+  "error": null
+}

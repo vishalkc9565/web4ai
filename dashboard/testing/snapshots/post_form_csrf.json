@@ -1,0 +1,23 @@
+{
+  "markdown": "",
+  "actions": [],
+  "meta": {
+    "url": "https://httpbin.org/forms/post",
+    "final_url": "https://httpbin.org/forms/post",
+    "fetched_at": "2026-06-10T11:35:31.620688Z",
+    "extraction_path": "static",
+    "strategy": "static",
+    "truncated": false,
+    "cached": false,
+    "cached_at": null,
+    "tokens": {},
+    "timings_ms": {
+      "total": 4263.873208023142
+    }
+  },
+  "error": {
+    "code": "http_503",
+    "message": "Target returned HTTP 503",
+    "recoverable": true
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web4ai.dev/schemas/job-response.json",
+  "title": "JobResponse",
+  "description": "Async job status (M3+). v1 uses synchronous extract only.",
+  "type": "object",
+  "required": ["job_id", "status", "created_at"],
+  "properties": {
+    "job_id": { "$ref": "common.json#/$defs/JobId" },
+    "status": {
+      "type": "string",
+      "enum": ["queued", "running", "completed", "failed", "expired"]
+    },
+    "created_at": { "$ref": "common.json#/$defs/IsoDateTime" },
+    "completed_at": { "$ref": "common.json#/$defs/IsoDateTime" },
+    "result": { "$ref": "extract-response.json" },
+    "error": { "$ref": "common.json#/$defs/ApiError" },
+    "progress": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "type": "string",
+          "enum": ["fetch", "render", "extract", "probe", "assemble"]
+        },
+        "percent": { "type": "integer", "minimum": 0, "maximum": 100 }
+      }
+    }
+  },
+  "additionalProperties": false
+}

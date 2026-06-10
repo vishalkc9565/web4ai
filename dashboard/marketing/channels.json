@@ -1,0 +1,67 @@
+{
+  "updatedAt": "2026-06-10T10:50:00Z",
+  "updatedBy": "Lead Generator",
+  "masterAgent": {
+    "name": "Lead Generator",
+    "id": "c107794f-d398-4f0f-b24a-f34adccd86ca",
+    "urlKey": "lead-generator",
+    "status": "idle"
+  },
+  "channels": [
+    {
+      "id": "devrel-content",
+      "name": "DevRel / Content",
+      "agentName": "DevRel Content",
+      "agentId": "98ffd81a-0c92-4235-ac60-29cbedb889a3",
+      "agentUrlKey": "devrel-content",
+      "status": "active",
+      "icp": "AI/ML engineers and agent framework builders",
+      "activationPath": "POST /v1/extract trial via docs + GitHub README",
+      "leadingMetrics": {
+        "blogViews": 0,
+        "githubStars": 0,
+        "docsVisits": 0,
+        "apiTrials": 0,
+        "tutorialDrafts": 1
+      },
+      "lastActivity": "WEB-18 done: draft tutorial at docs/tutorials/extract-any-url-in-30-seconds.md",
+      "blockers": []
+    },
+    {
+      "id": "social",
+      "name": "Social / Demos",
+      "agentName": "Social",
+      "agentId": "0b7feeaa-d8fe-443d-893c-4cae8b59b6d4",
+      "agentUrlKey": "social",
+      "status": "idle",
+      "icp": "Indie hackers and AI tool enthusiasts on X/LinkedIn",
+      "activationPath": "Demo video → landing page → API signup",
+      "leadingMetrics": {
+        "impressions": 0,
+        "clicks": 0,
+        "demoViews": 0,
+        "signups": 0
+      },
+      "lastActivity": "Agent hired — awaiting first assigned task",
+      "blockers": []
+    },
+    {
+      "id": "partnerships",
+      "name": "Partnerships / Community",
+      "agentName": "Partnerships",
+      "agentId": "2bd1680d-a887-4553-a162-8885caf68578",
+      "agentUrlKey": "partnerships",
+      "status": "idle",
+      "icp": "Agent platform integrators (LangChain, CrewAI, AutoGPT ecosystems)",
+      "activationPath": "Integration guide → partner listing → co-marketing",
+      "leadingMetrics": {
+        "outreachSent": 0,
+        "replies": 0,
+        "integrations": 0,
+        "referralSignups": 0
+      },
+      "lastActivity": "Agent hired — awaiting first assigned task",
+      "blockers": []
+    }
+  ]
+}

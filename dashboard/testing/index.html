@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>web4AI Golden Corpus Testing Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f1117; --surface: #1a1d27; --border: #2a2f3d;
+      --text: #e8eaed; --muted: #9aa0a6; --accent: #6c9eff;
+      --green: #34d399; --yellow: #fbbf24; --red: #f87171;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.5; padding: 2rem; }
+    h1 { font-size: 1.75rem; }
+    .subtitle { color: var(--muted); margin: 0.5rem 0 1.5rem; }
+    .summary { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+      padding: 1rem 1.25rem; min-width: 140px; }
+    .card .label { color: var(--muted); font-size: 0.8rem; }
+    .card .value { font-size: 1.5rem; font-weight: 600; }
+    table { width: 100%; border-collapse: collapse; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-size: 0.875rem; }
+    th, td { padding: 0.65rem 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+    th { color: var(--muted); font-weight: 500; }
+    .badge { padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 600; }
+    .badge.green { background: rgba(52,211,153,0.15); color: var(--green); }
+    .badge.red { background: rgba(248,113,113,0.15); color: var(--red); }
+    .badge.yellow { background: rgba(251,191,36,0.15); color: var(--yellow); }
+    .failures { color: var(--red); max-width: 280px; }
+    a { color: var(--accent); }
+  </style>
+</head>
+<body>
+  <h1>web4AI Golden Corpus Testing Dashboard</h1>
+  <p class="subtitle">API: <code>http://127.0.0.1:8000</code> · Last run: <code>2026-06-10T11:35:18.005583+00:00</code></p>
+  <div class="summary">
+    <div class="card"><div class="label">Passed</div><div class="value" style="color:var(--green)">7</div></div>
+    <div class="card"><div class="label">Failed</div><div class="value" style="color:var(--red)">5</div></div>
+    <div class="card"><div class="label">Skipped</div><div class="value" style="color:var(--yellow)">2</div></div>
+    <div class="card"><div class="label">Total fixtures</div><div class="value">14</div></div>
+  </div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th><th>Category</th><th>URL</th><th>Status</th>
+        <th>Path</th><th>Actions</th><th>Markdown</th><th>Error</th><th>Failing checks</th><th>Snapshot</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+  <td><code>static_article</code></td>
+  <td>read</td>
+  <td><a href="https://news.ycombinator.com/item?id=1" target="_blank" rel="noopener">https://news.ycombinator.com/item?id=1…</a></td>
+  <td><span class="badge red">fail</span></td>
+  <td>static</td>
+  <td>0</td>
+  <td>486</td>
+  <td>—</td>
+  <td class="failures">markdown missing substring: '#'<br>markdown missing substring: 'Comments'</td>
+  <td><a href="dashboard/testing/snapshots/static_article.json">dashboard/testing/snapshots/static_article.json</a></td>
+</tr><tr>
+  <td><code>docs_page</code></td>
+  <td>read</td>
+  <td><a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GE…</a></td>
+  <td><span class="badge green">pass</span></td>
+  <td>static</td>
+  <td>0</td>
+  <td>2797</td>
+  <td>bot_detection</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>wikipedia_article</code></td>
+  <td>read</td>
+  <td><a href="https://en.wikipedia.org/wiki/Web_scraping" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Web_scraping…</a></td>
+  <td><span class="badge green">pass</span></td>
+  <td>static</td>
+  <td>0</td>
+  <td>42840</td>
+  <td>bot_detection</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>books_listing</code></td>
+  <td>listing</td>
+  <td><a href="https://books.toscrape.com/" target="_blank" rel="noopener">https://books.toscrape.com/…</a></td>
+  <td><span class="badge red">fail</span></td>
+  <td>static</td>
+  <td>15</td>
+  <td>473</td>
+  <td>—</td>
+  <td class="failures">markdown tokens 68 < min 100<br>markdown missing substring: 'All products'<br>missing action: search_products</td>
+  <td><a href="dashboard/testing/snapshots/books_listing.json">dashboard/testing/snapshots/books_listing.json</a></td>
+</tr><tr>
+  <td><code>quotes_pagination</code></td>
+  <td>listing</td>
+  <td><a href="https://quotes.toscrape.com/page/1/" target="_blank" rel="noopener">https://quotes.toscrape.com/page/1/…</a></td>
+  <td><span class="badge green">pass</span></td>
+  <td>static</td>
+  <td>15</td>
+  <td>1425</td>
+  <td>—</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>get_search_form</code></td>
+  <td>forms</td>
+  <td><a href="https://books.toscrape.com/" target="_blank" rel="noopener">https://books.toscrape.com/…</a></td>
+  <td><span class="badge red">fail</span></td>
+  <td>static</td>
+  <td>15</td>
+  <td>473</td>
+  <td>—</td>
+  <td class="failures">missing action: search_products</td>
+  <td><a href="dashboard/testing/snapshots/get_search_form.json">dashboard/testing/snapshots/get_search_form.json</a></td>
+</tr><tr>
+  <td><code>post_form_csrf</code></td>
+  <td>forms</td>
+  <td><a href="https://httpbin.org/forms/post" target="_blank" rel="noopener">https://httpbin.org/forms/post…</a></td>
+  <td><span class="badge red">fail</span></td>
+  <td>static</td>
+  <td>0</td>
+  <td>0</td>
+  <td>http_503</td>
+  <td class="failures">missing action: submit_contact_form</td>
+  <td><a href="dashboard/testing/snapshots/post_form_csrf.json">dashboard/testing/snapshots/post_form_csrf.json</a></td>
+</tr><tr>
+  <td><code>firecrawl_vs_tavily</code></td>
+  <td>read</td>
+  <td><a href="https://www.firecrawl.dev/alternatives/firecrawl-vs-tavily" target="_blank" rel="noopener">https://www.firecrawl.dev/alternatives/firecrawl-vs-tavily…</a></td>
+  <td><span class="badge green">pass</span></td>
+  <td>static</td>
+  <td>15</td>
+  <td>11266</td>
+  <td>—</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>spa_shell</code></td>
+  <td>spa/render</td>
+  <td><a href="https://react.dev/" target="_blank" rel="noopener">https://react.dev/…</a></td>
+  <td><span class="badge green">pass</span></td>
+  <td>render</td>
+  <td>0</td>
+  <td>3834</td>
+  <td>—</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>cookie_banner_heavy</code></td>
+  <td>spa/render</td>
+  <td><a href="https://www.bbc.com/" target="_blank" rel="noopener">https://www.bbc.com/…</a></td>
+  <td><span class="badge green">pass</span></td>
+  <td>render</td>
+  <td>15</td>
+  <td>324</td>
+  <td>bot_detection</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>ajax_search</code></td>
+  <td>forms</td>
+  <td><a href="https://quotes.toscrape.com/search.aspx" target="_blank" rel="noopener">https://quotes.toscrape.com/search.aspx…</a></td>
+  <td><span class="badge green">pass</span></td>
+  <td>render</td>
+  <td>3</td>
+  <td>791</td>
+  <td>—</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>in_page_tab</code></td>
+  <td>forms</td>
+  <td><a href="https://jqueryui.com/resources/demos/tabs/default.html" target="_blank" rel="noopener">https://jqueryui.com/resources/demos/tabs/default.html…</a></td>
+  <td><span class="badge red">fail</span></td>
+  <td>static</td>
+  <td>0</td>
+  <td>2268</td>
+  <td>—</td>
+  <td class="failures">no action with local/DOM effect found</td>
+  <td><a href="dashboard/testing/snapshots/in_page_tab.json">dashboard/testing/snapshots/in_page_tab.json</a></td>
+</tr><tr>
+  <td><code>e2e_search_flow</code></td>
+  <td>e2e</td>
+  <td><a href="https://books.toscrape.com/" target="_blank" rel="noopener">https://books.toscrape.com/…</a></td>
+  <td><span class="badge yellow">skipped</span></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr><tr>
+  <td><code>e2e_pagination_flow</code></td>
+  <td>e2e</td>
+  <td><a href="https://quotes.toscrape.com/page/1/" target="_blank" rel="noopener">https://quotes.toscrape.com/page/1/…</a></td>
+  <td><span class="badge yellow">skipped</span></td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+  <td>—</td>
+  <td class="failures">—</td>
+  <td>—</td>
+</tr>
+    </tbody>
+  </table>
+  <p class="subtitle" style="margin-top:1.5rem">Data: <code>dashboard/testing/results.json</code> · Refresh: <code>make dashboard</code></p>
+</body>
+</html>

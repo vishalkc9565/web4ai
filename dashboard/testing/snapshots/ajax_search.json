@@ -1,0 +1,24 @@
+{
+  "markdown": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.",
+  "actions": [],
+  "meta": {
+    "url": "https://quotes.toscrape.com/search/",
+    "final_url": "https://quotes.toscrape.com/search/",
+    "fetched_at": "2026-06-10T11:01:02.138870Z",
+    "extraction_path": "render",
+    "strategy": "render",
+    "truncated": false,
+    "cached": false,
+    "cached_at": null,
+    "tokens": {
+      "markdown": 24
+    },
+    "timings_ms": {
+      "render": 1650.0578749983106,
+      "extract": 8.824583987006918,
+      "actions": 0.2883329871110618,
+      "total": 1659.552083001472
+    }
+  },
+  "error": null
+}

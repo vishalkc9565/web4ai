@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web4ai.dev/schemas/action.json",
+  "title": "Action",
+  "description": "A callable tool representing one interaction on a web page.",
+  "$ref": "#/$defs/ActionFull",
+  "$defs": {
+    "ActionMinimal": {
+      "type": "object",
+      "required": ["id", "name", "description", "parameters", "execution"],
+      "properties": {
+        "id": { "$ref": "common.json#/$defs/ActionId" },
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_]{2,63}$",
+          "description": "Snake_case tool name for agent invocation"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 10,
+          "maxLength": 500
+        },
+        "parameters": {
+          "type": "object",
+          "description": "JSON Schema describing action arguments"
+        },
+        "execution": { "$ref": "common.json#/$defs/ExecutionMode" }
+      },
+      "additionalProperties": false
+    },
+    "ActionFull": {
+      "allOf": [
+        { "$ref": "#/$defs/ActionMinimal" },
+        {
+          "type": "object",
+          "required": [
+            "verification",
+            "confidence",
+            "effect",
+            "source_url",
+            "expires_at"
+          ],
+          "properties": {
+            "verification": { "$ref": "common.json#/$defs/VerificationStatus" },
+            "confidence": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "effect": { "$ref": "common.json#/$defs/EffectClass" },
+            "source_url": { "$ref": "common.json#/$defs/Url" },
+            "template_fingerprint": {
+              "type": "string",
+              "pattern": "^tpl_[a-f0-9]{8,16}$"
+            },
+            "expires_at": { "$ref": "common.json#/$defs/IsoDateTime" },
+            "http": { "$ref": "common.json#/$defs/HttpContract" },
+            "browser": { "$ref": "common.json#/$defs/BrowserContract" },
+            "fallback_execution": { "$ref": "common.json#/$defs/ExecutionMode" },
+            "locator": { "$ref": "common.json#/$defs/LocatorBundle" },
+            "leads_to": {
+              "type": "string",
+              "pattern": "^tpl_[a-f0-9]{8,16}$",
+              "description": "Template fingerprint of the page state this action transitions to"
+            },
+            "tier": {
+              "type": "string",
+              "enum": ["t0_http", "t2_browser", "declared"]
+            },
+            "source": {
+              "type": "string",
+              "enum": ["webmcp", "openapi", "graphql", "ax", "form", "probe"]
+            },
+            "rank": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Lower = more useful; used for agent presentation order"
+            },
+            "requires_confirm": {
+              "type": "boolean",
+              "default": false,
+              "description": "True when effect is mutating or presumed_mutating"
+            }
+          },
+          "oneOf": [
+            {
+              "properties": { "execution": { "const": "http" } },
+              "required": ["http"]
+            },
+            {
+              "properties": { "execution": { "const": "browser" } },
+              "required": ["browser"]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}

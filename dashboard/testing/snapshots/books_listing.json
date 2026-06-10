@@ -1,0 +1,145 @@
+{
+  "markdown": "[A Light in the ...](https://books.toscrape.com/catalogue/a-light-in-the-attic_1000/index.html)\n\n\u00a351.77\n\nIn stock\n\n\u00a351.77\n\nIn stock\n\n\u00a353.74\n\nIn stock\n\n\u00a350.10\n\nIn stock\n\n\u00a347.82\n\nIn stock\n\n\u00a354.23\n\nIn stock\n\n\u00a322.65\n\nIn stock\n\n\u00a333.34\n\nIn stock\n\n\u00a317.93\n\nIn stock\n\n\u00a322.60\n\nIn stock\n\n\u00a352.15\n\nIn stock\n\n\u00a313.99\n\nIn stock\n\n\u00a320.66\n\nIn stock\n\n\u00a317.46\n\nIn stock\n\n\u00a352.29\n\nIn stock\n\n\u00a335.02\n\nIn stock\n\n\u00a357.25\n\nIn stock\n\n\u00a323.88\n\nIn stock\n\n\u00a337.59\n\nIn stock\n\n\u00a351.33\n\nIn stock\n\n\u00a345.17\n\nIn stock",
+  "actions": [
+    {
+      "type": "link",
+      "label": "next",
+      "target": "https://books.toscrape.com/catalogue/page-2.html",
+      "method": "GET",
+      "parameters": {},
+      "description": "Navigate to 'next' (pagination)."
+    },
+    {
+      "type": "form",
+      "label": "A Light in the ...",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'A Light in the ...' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "All products",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'All products' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "It's Only the Himalayas",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'It's Only the Himalayas' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Libertarianism for Beginners",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Libertarianism for Beginners' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Mesaerion: The Best Science ...",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Mesaerion: The Best Science ...' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Olio",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Olio' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Our Band Could Be ...",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Our Band Could Be ...' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Rip it Up and ...",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Rip it Up and ...' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Sapiens: A Brief History ...",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Sapiens: A Brief History ...' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Scott Pilgrim's Precious Little ...",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Scott Pilgrim's Precious Little ...' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Set Me Free",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Set Me Free' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Shakespeare's Sonnets",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Shakespeare's Sonnets' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Sharp Objects",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Sharp Objects' form (GET https://books.toscrape.com/)."
+    },
+    {
+      "type": "form",
+      "label": "Soumission",
+      "target": "https://books.toscrape.com/",
+      "method": "GET",
+      "parameters": {},
+      "description": "Submit the 'Soumission' form (GET https://books.toscrape.com/)."
+    }
+  ],
+  "meta": {
+    "url": "https://books.toscrape.com/",
+    "final_url": "https://books.toscrape.com/",
+    "fetched_at": "2026-06-10T11:35:24.031623Z",
+    "extraction_path": "static",
+    "strategy": "static",
+    "truncated": false,
+    "cached": false,
+    "cached_at": null,
+    "tokens": {
+      "markdown": 195
+    },
+    "timings_ms": {
+      "fetch": 2847.0290830009617,
+      "extract": 109.34079199796543,
+      "actions": 18.63549998961389,
+      "total": 2980.2294579858426
+    }
+  },
+  "error": null
+}

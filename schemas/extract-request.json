@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web4ai.dev/schemas/extract-request.json",
+  "title": "ExtractRequest",
+  "type": "object",
+  "required": ["url"],
+  "properties": {
+    "url": { "$ref": "common.json#/$defs/Url" },
+    "render": { "$ref": "common.json#/$defs/RenderMode" },
+    "actions": { "$ref": "common.json#/$defs/ActionsMode" },
+    "actions_profile": { "$ref": "common.json#/$defs/ActionsProfile" },
+    "formats": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["markdown", "actions", "meta"]
+      },
+      "default": ["markdown", "actions", "meta"],
+      "uniqueItems": true
+    },
+    "session_id": {
+      "$ref": "common.json#/$defs/SessionId",
+      "description": "Reuse browser cookies/storage from a prior act session"
+    },
+    "include_suppressed": {
+      "type": "boolean",
+      "default": false,
+      "description": "Debug: include T-ignore candidates with suppression reasons"
+    },
+    "max_actions": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 50,
+      "default": 15
+    },
+    "timeout_ms": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 60000,
+      "default": 30000
+    }
+  },
+  "additionalProperties": false
+}

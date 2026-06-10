@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web4ai.dev/schemas/act-request.json",
+  "title": "ActRequest",
+  "type": "object",
+  "required": ["action_id"],
+  "properties": {
+    "action_id": { "$ref": "common.json#/$defs/ActionId" },
+    "params": {
+      "type": "object",
+      "default": {},
+      "description": "Arguments validated against the action's parameters JSON Schema"
+    },
+    "session_id": {
+      "$ref": "common.json#/$defs/SessionId",
+      "description": "Required for browser actions and recommended for HTTP actions with cookie auth"
+    },
+    "confirm_mutating": {
+      "type": "boolean",
+      "default": false,
+      "description": "Must be true when the action has requires_confirm=true"
+    },
+    "actions": { "$ref": "common.json#/$defs/ActionsMode" },
+    "actions_profile": { "$ref": "common.json#/$defs/ActionsProfile" },
+    "timeout_ms": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 60000,
+      "default": 30000
+    }
+  },
+  "additionalProperties": false
+}

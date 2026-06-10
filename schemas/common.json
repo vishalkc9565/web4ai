@@ -1,0 +1,210 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web4ai.dev/schemas/common.json",
+  "title": "web4ai Common Types",
+  "$defs": {
+    "Url": {
+      "type": "string",
+      "format": "uri",
+      "pattern": "^https?://"
+    },
+    "IsoDateTime": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ActionId": {
+      "type": "string",
+      "pattern": "^act_[a-f0-9]{12,32}$",
+      "description": "Stable action identifier. Derived from domain + template fingerprint + semantic key + contract version."
+    },
+    "SessionId": {
+      "type": "string",
+      "pattern": "^sess_[a-f0-9]{12,32}$"
+    },
+    "JobId": {
+      "type": "string",
+      "pattern": "^job_[a-f0-9]{12,32}$"
+    },
+    "ExtractionId": {
+      "type": "string",
+      "pattern": "^ext_[a-f0-9]{12,32}$"
+    },
+    "VerificationStatus": {
+      "type": "string",
+      "enum": ["verified", "inferred", "unverified"]
+    },
+    "EffectClass": {
+      "type": "string",
+      "enum": [
+        "navigate",
+        "query",
+        "mutating",
+        "presumed_mutating",
+        "local",
+        "dialog",
+        "dead"
+      ]
+    },
+    "ExecutionMode": {
+      "type": "string",
+      "enum": ["http", "browser"]
+    },
+    "RenderMode": {
+      "type": "string",
+      "enum": ["auto", "always", "never"],
+      "default": "auto"
+    },
+    "ActionsMode": {
+      "type": "string",
+      "enum": ["none", "fast", "verified"],
+      "default": "fast",
+      "description": "none: markdown only. fast: inferred actions (AX + forms, no probing). verified: probe + API lift."
+    },
+    "ActionsProfile": {
+      "type": "string",
+      "enum": ["minimal", "full"],
+      "default": "minimal",
+      "description": "minimal: id, name, description, parameters, execution. full: adds http, locator, confidence, verification, effect."
+    },
+    "Region": {
+      "type": "string",
+      "enum": ["main", "nav", "header", "footer", "aside", "dialog"]
+    },
+    "SemanticFingerprint": {
+      "type": "object",
+      "required": ["role", "accessible_name", "region"],
+      "properties": {
+        "role": { "type": "string" },
+        "accessible_name": { "type": "string" },
+        "region": { "$ref": "#/$defs/Region" },
+        "neighbor_text": {
+          "type": "array",
+          "items": { "type": "string" },
+          "maxItems": 5
+        }
+      },
+      "additionalProperties": false
+    },
+    "LocatorBundle": {
+      "type": "object",
+      "required": ["fingerprint"],
+      "properties": {
+        "by_role": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "items": { "type": "string" },
+          "description": "[role, accessible_name] for getByRole()"
+        },
+        "by_testid": { "type": "string" },
+        "by_label": { "type": "string" },
+        "structural": {
+          "type": "string",
+          "description": "Anchored relative selector from nearest landmark"
+        },
+        "fingerprint": { "$ref": "#/$defs/SemanticFingerprint" }
+      },
+      "additionalProperties": false
+    },
+    "HttpContract": {
+      "type": "object",
+      "required": ["method", "url_template"],
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        },
+        "url_template": {
+          "type": "string",
+          "description": "RFC 6570-style template, e.g. https://x.com/api/search?q={query}"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "body_template": {
+          "type": "object",
+          "description": "JSON body template for POST/PUT/PATCH; values may reference param names"
+        },
+        "content_type": { "type": "string" },
+        "auth": {
+          "type": "string",
+          "enum": ["none", "cookie", "bearer", "session"]
+        },
+        "passthrough": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Hidden field names the executor must echo verbatim (CSRF tokens, state)"
+        }
+      },
+      "additionalProperties": false
+    },
+    "BrowserContract": {
+      "type": "object",
+      "required": ["interaction"],
+      "properties": {
+        "interaction": {
+          "type": "string",
+          "enum": ["click", "fill_and_submit", "select", "check", "press"]
+        },
+        "locator": { "$ref": "#/$defs/LocatorBundle" },
+        "fill_map": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Maps action param names to field locators for fill_and_submit"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TokenCounts": {
+      "type": "object",
+      "properties": {
+        "markdown": { "type": "integer", "minimum": 0 },
+        "tokenizer": {
+          "type": "string",
+          "default": "cl100k_base"
+        }
+      },
+      "additionalProperties": false
+    },
+    "TimingsMs": {
+      "type": "object",
+      "properties": {
+        "fetch": { "type": "number", "minimum": 0 },
+        "render": { "type": "number", "minimum": 0 },
+        "extract": { "type": "number", "minimum": 0 },
+        "markdown": { "type": "number", "minimum": 0 },
+        "actions": { "type": "number", "minimum": 0 },
+        "probe": { "type": "number", "minimum": 0 },
+        "total": { "type": "number", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "ApiError": {
+      "type": "object",
+      "required": ["error", "message"],
+      "properties": {
+        "error": {
+          "type": "string",
+          "enum": [
+            "invalid_request",
+            "domain_not_allowed",
+            "quota_exceeded",
+            "mutating_not_confirmed",
+            "action_not_found",
+            "action_stale",
+            "unextractable",
+            "rate_limited",
+            "target_blocked",
+            "render_timeout",
+            "internal_error"
+          ]
+        },
+        "message": { "type": "string" },
+        "details": { "type": "object" },
+        "request_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    }
+  }
+}

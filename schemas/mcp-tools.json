@@ -1,0 +1,136 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://web4ai.dev/schemas/mcp-tools.json",
+  "title": "web4ai MCP Tool Definitions",
+  "description": "MCP tool surface mirroring REST /v1/extract and /v1/act. Ship at M2.5.",
+  "server": {
+    "name": "web4ai",
+    "version": "1.0.0",
+    "transport": ["stdio", "sse"],
+    "sse_path": "/mcp/sse",
+    "stdio_command": "python -m web4ai.mcp"
+  },
+  "auth": {
+    "rest": {
+      "type": "bearer",
+      "header": "Authorization",
+      "format": "Bearer w4a_<key>",
+      "description": "API keys issued per customer; scoped to allowed_domains list"
+    },
+    "mcp_stdio": {
+      "type": "env",
+      "variables": {
+        "WEB4AI_API_KEY": "Required. Same key as REST Bearer token.",
+        "WEB4AI_BASE_URL": "Optional. Default https://api.web4ai.dev"
+      }
+    },
+    "mcp_sse": {
+      "type": "bearer",
+      "header": "Authorization",
+      "description": "Same Bearer token as REST; SSE endpoint requires TLS"
+    },
+    "key_scopes": [
+      "extract:read",
+      "act:execute",
+      "act:mutating"
+    ],
+    "notes": [
+      "act:mutating required to set confirm_mutating on mutating actions",
+      "Keys without act:mutating receive 403 on mutating act calls",
+      "allowed_domains enforced per key; empty list = deny all in dev, open in prod with rate limits"
+    ]
+  },
+  "tools": [
+    {
+      "name": "read_page",
+      "description": "Fetch a URL and return clean Markdown plus a list of callable actions the agent can perform on the page.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["url"],
+        "properties": {
+          "url": { "type": "string", "format": "uri" },
+          "render": {
+            "type": "string",
+            "enum": ["auto", "always", "never"],
+            "default": "auto"
+          },
+          "actions": {
+            "type": "string",
+            "enum": ["none", "fast", "verified"],
+            "default": "fast"
+          },
+          "session_id": {
+            "type": "string",
+            "description": "Optional session from a prior do_action call"
+          }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "$ref": "extract-response.json"
+      },
+      "maps_to": "POST /v1/extract"
+    },
+    {
+      "name": "do_action",
+      "description": "Execute a previously discovered action and return the resulting page Markdown and new actions. Use session_id from read_page or a prior do_action for multi-step flows.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["action_id"],
+        "properties": {
+          "action_id": { "type": "string", "pattern": "^act_" },
+          "params": { "type": "object", "default": {} },
+          "session_id": { "type": "string" },
+          "confirm_mutating": {
+            "type": "boolean",
+            "default": false,
+            "description": "Set true to execute purchase/submit/delete actions"
+          },
+          "actions": {
+            "type": "string",
+            "enum": ["fast", "verified"],
+            "default": "fast"
+          }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "$ref": "extract-response.json"
+      },
+      "maps_to": "POST /v1/act"
+    },
+    {
+      "name": "search_site",
+      "description": "Convenience wrapper: read_page then do_action on the site's search action. Fails with a clear error if no search action is found.",
+      "inputSchema": {
+        "type": "object",
+        "required": ["url", "query"],
+        "properties": {
+          "url": { "type": "string", "format": "uri" },
+          "query": { "type": "string", "minLength": 1 },
+          "session_id": { "type": "string" },
+          "render": {
+            "type": "string",
+            "enum": ["auto", "always", "never"],
+            "default": "auto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "outputSchema": {
+        "$ref": "extract-response.json"
+      },
+      "maps_to": "POST /v1/extract + POST /v1/act (composite)",
+      "optional": true
+    }
+  ],
+  "resources": [
+    {
+      "uri": "web4ai://session/{session_id}",
+      "name": "Browser session state",
+      "description": "Read-only view of session URL, expiry, and cookie count. No credentials exposed.",
+      "mimeType": "application/json"
+    }
+  ],
+  "prompts": []
+}

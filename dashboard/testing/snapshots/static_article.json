@@ -1,0 +1,23 @@
+{
+  "markdown": "Hacker News\nnew\n|\npast\n|\ncomments\n|\nask\n|\nshow\n|\njobs\n|\nsubmit\nlogin\nY Combinator\n(\nycombinator.com\n)\n57 points\nby\npg\non Oct 9, 2006\n|\nhide\n|\npast\n|\nfavorite\n|\n3 comments\nsama\non Oct 9, 2006\n|\nnext\n[\u2013]\n\"the rising star of venture capital\" -unknown VC eating lunch on SHR\npg\non Oct 9, 2006\n|\nparent\n|\nnext\n[\u2013]\nIs there anywhere to eat on Sandhill Road?\ndmon\non Feb 25, 2007\n|\nroot\n|\nparent\n|\nnext\n[\u2013]\nsure\nGuidelines\n|\nFAQ\n|\nLists\n|\nAPI\n|\nSecurity\n|\nLegal\n|\nApply to YC\n|\nContact\nSearch:",
+  "actions": [],
+  "meta": {
+    "url": "https://news.ycombinator.com/item?id=1",
+    "final_url": "https://news.ycombinator.com/item?id=1",
+    "fetched_at": "2026-06-10T11:35:19.866879Z",
+    "extraction_path": "static",
+    "strategy": "static",
+    "truncated": false,
+    "cached": false,
+    "cached_at": null,
+    "tokens": {
+      "markdown": 187
+    },
+    "timings_ms": {
+      "fetch": 1727.4692909850273,
+      "extract": 110.43266698834486,
+      "total": 1852.0812079950701
+    }
+  },
+  "error": null
+}

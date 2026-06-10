@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  unit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --extra dev
+      - name: Lint
+        run: make lint
+      - name: Unit tests
+        run: make test
+
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+      - name: Install dependencies
+        run: uv sync --extra dev --extra browser
+      - name: Install Playwright Chromium
+        run: uv run playwright install chromium --with-deps
+      - name: Integration tests (live URLs)
+        run: uv run pytest tests/test_integration.py -m integration -q --timeout=120

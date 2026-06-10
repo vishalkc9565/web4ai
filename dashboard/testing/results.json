@@ -1,0 +1,215 @@
+{
+  "run_at": "2026-06-10T11:35:18.005583+00:00",
+  "api_base": "http://127.0.0.1:8000",
+  "total": 14,
+  "passed": 7,
+  "failed": 5,
+  "skipped": 2,
+  "results": [
+    {
+      "id": "static_article",
+      "name": "Static article page",
+      "url": "https://news.ycombinator.com/item?id=1",
+      "category": "read",
+      "status": "fail",
+      "extraction_path": "static",
+      "action_count": 0,
+      "markdown_length": 486,
+      "failures": [
+        "markdown missing substring: '#'",
+        "markdown missing substring: 'Comments'"
+      ],
+      "snapshot": "dashboard/testing/snapshots/static_article.json",
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "docs_page",
+      "name": "Documentation with code blocks",
+      "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET",
+      "category": "read",
+      "status": "pass",
+      "extraction_path": "static",
+      "action_count": 0,
+      "markdown_length": 2797,
+      "failures": [],
+      "snapshot": null,
+      "title": null,
+      "error": "bot_detection"
+    },
+    {
+      "id": "wikipedia_article",
+      "name": "Long-form article with tables",
+      "url": "https://en.wikipedia.org/wiki/Web_scraping",
+      "category": "read",
+      "status": "pass",
+      "extraction_path": "static",
+      "action_count": 0,
+      "markdown_length": 42840,
+      "failures": [],
+      "snapshot": null,
+      "title": null,
+      "error": "bot_detection"
+    },
+    {
+      "id": "books_listing",
+      "name": "E-commerce product listing with pagination",
+      "url": "https://books.toscrape.com/",
+      "category": "listing",
+      "status": "fail",
+      "extraction_path": "static",
+      "action_count": 15,
+      "markdown_length": 473,
+      "failures": [
+        "markdown tokens 68 < min 100",
+        "markdown missing substring: 'All products'",
+        "missing action: search_products"
+      ],
+      "snapshot": "dashboard/testing/snapshots/books_listing.json",
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "quotes_pagination",
+      "name": "Paginated list with next link",
+      "url": "https://quotes.toscrape.com/page/1/",
+      "category": "listing",
+      "status": "pass",
+      "extraction_path": "static",
+      "action_count": 15,
+      "markdown_length": 1425,
+      "failures": [],
+      "snapshot": null,
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "get_search_form",
+      "name": "GET search form (T0 HTTP)",
+      "url": "https://books.toscrape.com/",
+      "category": "forms",
+      "status": "fail",
+      "extraction_path": "static",
+      "action_count": 15,
+      "markdown_length": 473,
+      "failures": [
+        "missing action: search_products"
+      ],
+      "snapshot": "dashboard/testing/snapshots/get_search_form.json",
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "post_form_csrf",
+      "name": "POST form with hidden fields",
+      "url": "https://httpbin.org/forms/post",
+      "category": "forms",
+      "status": "fail",
+      "extraction_path": "static",
+      "action_count": 0,
+      "markdown_length": 0,
+      "failures": [
+        "missing action: submit_contact_form"
+      ],
+      "snapshot": "dashboard/testing/snapshots/post_form_csrf.json",
+      "title": null,
+      "error": "http_503"
+    },
+    {
+      "id": "firecrawl_vs_tavily",
+      "name": "Firecrawl vs Tavily comparison page",
+      "url": "https://www.firecrawl.dev/alternatives/firecrawl-vs-tavily",
+      "category": "read",
+      "status": "pass",
+      "extraction_path": "static",
+      "action_count": 15,
+      "markdown_length": 11266,
+      "failures": [],
+      "snapshot": null,
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "spa_shell",
+      "name": "Client-rendered SPA shell",
+      "url": "https://react.dev/",
+      "category": "spa/render",
+      "status": "pass",
+      "extraction_path": "render",
+      "action_count": 0,
+      "markdown_length": 3834,
+      "failures": [],
+      "snapshot": null,
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "cookie_banner_heavy",
+      "name": "Page with consent UI that must be suppressed",
+      "url": "https://www.bbc.com/",
+      "category": "spa/render",
+      "status": "pass",
+      "extraction_path": "render",
+      "action_count": 15,
+      "markdown_length": 324,
+      "failures": [],
+      "snapshot": null,
+      "title": null,
+      "error": "bot_detection"
+    },
+    {
+      "id": "ajax_search",
+      "name": "JS-driven search with underlying XHR",
+      "url": "https://quotes.toscrape.com/search.aspx",
+      "category": "forms",
+      "status": "pass",
+      "extraction_path": "render",
+      "action_count": 3,
+      "markdown_length": 791,
+      "failures": [],
+      "snapshot": null,
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "in_page_tab",
+      "name": "DOM-local interaction (tab switch, no navigation)",
+      "url": "https://jqueryui.com/resources/demos/tabs/default.html",
+      "category": "forms",
+      "status": "fail",
+      "extraction_path": "static",
+      "action_count": 0,
+      "markdown_length": 2268,
+      "failures": [
+        "no action with local/DOM effect found"
+      ],
+      "snapshot": "dashboard/testing/snapshots/in_page_tab.json",
+      "title": null,
+      "error": null
+    },
+    {
+      "id": "e2e_search_flow",
+      "name": "End-to-end search \u2192 results page",
+      "url": "https://books.toscrape.com/",
+      "category": "e2e",
+      "status": "skipped",
+      "skipped_reason": "e2e multi-step flow not run in dashboard batch",
+      "extraction_path": null,
+      "action_count": null,
+      "markdown_length": null,
+      "failures": []
+    },
+    {
+      "id": "e2e_pagination_flow",
+      "name": "End-to-end pagination via HTTP action",
+      "url": "https://quotes.toscrape.com/page/1/",
+      "category": "e2e",
+      "status": "skipped",
+      "skipped_reason": "e2e multi-step flow not run in dashboard batch",
+      "extraction_path": null,
+      "action_count": null,
+      "markdown_length": null,
+      "failures": []
+    }
+  ]
+}

@@ -1,0 +1,280 @@
+# Golden-page corpus for regression testing.
+# Each entry defines a fixture: live URL (for integration) + frozen HTML snapshot (for unit).
+# Snapshots are captured once during Phase 0b and committed under golden/snapshots/.
+#
+# Run policy:
+#   - Unit tests: always use snapshots (no network).
+#   - Integration tests: hit live URLs weekly in CI; snapshots on failure for diff review.
+
+version: 1
+defaults:
+  render: auto
+  actions: fast
+  actions_profile: full
+  max_actions: 15
+
+fixtures:
+
+  # ── Read path (M0) ──────────────────────────────────────────────────────────
+
+  - id: static_article
+    name: Static article page
+    url: https://news.ycombinator.com/item?id=1
+    snapshot: snapshots/static_article.html
+    render: never
+    actions: none
+    expectations:
+      markdown:
+        min_tokens: 50
+        must_contain: ["#", "Comments"]
+        must_not_contain: ["<script", "<style"]
+      meta:
+        strategy: static
+
+  - id: docs_page
+    name: Documentation with code blocks
+    url: https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET
+    snapshot: snapshots/docs_page.html
+    render: never
+    actions: none
+    expectations:
+      markdown:
+        min_tokens: 200
+        must_contain: ["##", "GET", "Syntax"]
+        has_code_fence: true
+      meta:
+        strategy: static
+
+  - id: wikipedia_article
+    name: Long-form article with tables
+    url: https://en.wikipedia.org/wiki/Web_scraping
+    snapshot: snapshots/wikipedia_article.html
+    render: never
+    actions: none
+    expectations:
+      markdown:
+        min_tokens: 500
+        must_contain: ["Web scraping", "##"]
+      meta:
+        strategy: static
+
+  # ── E-commerce / listing (M0 + M1) ────────────────────────────────────────
+
+  - id: books_listing
+    name: E-commerce product listing with pagination
+    url: https://books.toscrape.com/
+    snapshot: snapshots/books_listing.html
+    render: never
+    expectations:
+      markdown:
+        min_tokens: 100
+        must_contain: ["All products", "£"]
+      actions:
+        min_count: 2
+        must_include_names: [search_products, go_to_next_page]
+        max_count: 15
+      meta:
+        strategy: static
+
+  - id: quotes_pagination
+    name: Paginated list with next link
+    url: https://quotes.toscrape.com/page/1/
+    snapshot: snapshots/quotes_pagination.html
+    render: never
+    expectations:
+      actions:
+        must_include_names: [go_to_next_page]
+        must_include_execution:
+          go_to_next_page: http
+        verification_at_least:
+          go_to_next_page: inferred
+
+  # ── Forms (M1 + M1.5) ───────────────────────────────────────────────────────
+
+  - id: get_search_form
+    name: GET search form (T0 HTTP)
+    url: https://books.toscrape.com/
+    snapshot: snapshots/get_search_form.html
+    render: never
+    actions: verified
+    expectations:
+      actions:
+        must_include_names: [search_products]
+        parameters:
+          search_products:
+            required: [query]
+            properties:
+              query: { type: string }
+        must_include_execution:
+          search_products: http
+        verification_at_least:
+          search_products: verified
+
+  - id: post_form_csrf
+    name: POST form with hidden fields
+    url: https://httpbin.org/forms/post
+    snapshot: snapshots/post_form_csrf.html
+    render: never
+    actions: verified
+    expectations:
+      actions:
+        must_include_names: [submit_contact_form]
+        must_have_passthrough: true
+        effect:
+          submit_contact_form: mutating
+        requires_confirm:
+          submit_contact_form: true
+      probe:
+        skip_execution: true  # never auto-submit in CI; contract-only assertions
+
+  # ── Live marketing / comparison pages ───────────────────────────────────────
+
+  - id: firecrawl_vs_tavily
+    name: Firecrawl vs Tavily comparison page
+    url: https://www.firecrawl.dev/alternatives/firecrawl-vs-tavily
+    render: auto
+    actions: fast
+    expectations:
+      expect_no_error: true
+      markdown:
+        min_tokens: 200
+        must_contain: ["Firecrawl", "Tavily", "comparison"]
+      actions:
+        min_count: 1
+        max_count: 15
+      notes: >
+        Regression for false paywall detection when page copy mentions
+        "paywalled sites" in marketing text. Added via WEB-24.
+
+  - id: amazon_in
+    name: Amazon India homepage
+    url: https://www.amazon.in/
+    render: auto
+    actions: fast
+    expectations:
+      markdown:
+        min_tokens: 10
+        must_contain: ["JavaScript"]
+      meta:
+        strategy: static
+      notes: >
+        Bot-protected e-commerce homepage. Static fetch returns a JS/captcha
+        interstitial; render path may surface bot_detection with partial recovery.
+        Added per board request on WEB-25.
+
+  # ── SPA / render path (M0) ──────────────────────────────────────────────────
+
+  - id: spa_shell
+    name: Client-rendered SPA shell
+    url: https://react.dev/
+    snapshot: snapshots/spa_shell_initial.html
+    render: always
+    actions: none
+    expectations:
+      markdown:
+        min_tokens: 100
+      meta:
+        strategy: render
+      notes: >
+        Initial HTML is a shell; rendered markdown must contain substantive
+        content after Playwright settle. Snapshot is pre-render shell only.
+
+  # ── Noise / T-ignore (M1) ───────────────────────────────────────────────────
+
+  - id: cookie_banner_heavy
+    name: Page with consent UI that must be suppressed
+    url: https://www.bbc.com/
+    snapshot: snapshots/cookie_banner_heavy.html
+    render: always
+    actions: fast
+    expectations:
+      actions:
+        must_not_include_names: [accept_cookies, reject_cookies, manage_preferences]
+        max_count: 15
+      suppressed:
+        min_count: 1
+        must_include_reasons: [noise]
+
+  # ── Probing / API lift (M1.5) ───────────────────────────────────────────────
+
+  - id: ajax_search
+    name: JS-driven search with underlying XHR
+    url: https://quotes.toscrape.com/search.aspx
+    snapshot: snapshots/ajax_search.html
+    render: always
+    actions: verified
+    expectations:
+      actions:
+        must_include_names: [search_quotes]
+        verification_at_least:
+          search_quotes: verified
+      probe:
+        representative_params:
+          search_quotes: { query: "life" }
+        expected_effect:
+          search_quotes: query
+        may_lift_to_http: true
+
+  - id: in_page_tab
+    name: DOM-local interaction (tab switch, no navigation)
+    url: https://jqueryui.com/resources/demos/tabs/default.html
+    snapshot: snapshots/in_page_tab.html
+    render: never
+    actions: verified
+    expectations:
+      actions:
+        must_include_effect: local
+      probe:
+        expected_effect_class: DOM_LOCAL
+
+  # ── Execution loop (M2) ─────────────────────────────────────────────────────
+
+  - id: e2e_search_flow
+    name: End-to-end search → results page
+    url: https://books.toscrape.com/
+    render: never
+    actions: verified
+    e2e:
+      steps:
+        - extract
+        - act:
+            action: search_products
+            params: { query: "science" }
+        - assert:
+            markdown_must_contain: ["science", "Science"]
+            final_url_contains: "catalogue"
+      session_required: false
+
+  - id: e2e_pagination_flow
+    name: End-to-end pagination via HTTP action
+    url: https://quotes.toscrape.com/page/1/
+    render: never
+    actions: verified
+    e2e:
+      steps:
+        - extract
+        - act:
+            action: go_to_next_page
+            params: {}
+        - assert:
+            markdown_must_contain: ["page/2"]
+            final_url_contains: "page/2"
+
+# Milestone exit criteria (automated in CI)
+
+exit_criteria:
+  M0:
+    - all fixtures with actions=none pass markdown expectations
+    - static_article p50_under_ms: 600
+    - spa_shell strategy is render
+  M1:
+    - books_listing action precision >= 0.80 vs labels in golden/labels/
+    - all fixtures max_actions <= 15
+    - cookie_banner_heavy passes must_not_include_names
+  M1_5:
+    - get_search_form search_products verification >= verified
+    - ajax_search may_lift_to_http passes when network captured
+    - zero fixtures have verified + requires_confirm + probe executed
+  M2:
+    - e2e_search_flow passes
+    - e2e_pagination_flow passes
