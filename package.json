@@ -1,0 +1,19 @@
+{
+  "name": "web4ai",
+  "description": "web4AI extraction API on Cloudflare Containers",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "dev": "wrangler dev",
+    "cf-typegen": "wrangler types"
+  },
+  "dependencies": {
+    "@cloudflare/containers": "^0.0.13"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.4",
+    "typescript": "^5.5.2",
+    "wrangler": "^4.21.2"
+  }
+}

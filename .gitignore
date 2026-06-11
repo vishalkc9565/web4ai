@@ -8,5 +8,7 @@ dist/
 .ruff_cache/
 .mypy_cache/
 .npm-cache/
+node_modules/
+.wrangler/
 .env
 .DS_Store

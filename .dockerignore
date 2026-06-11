@@ -1,0 +1,16 @@
+.git
+.github
+.venv
+.pytest_cache
+.ruff_cache
+.mypy_cache
+.npm-cache
+node_modules
+.wrangler
+tests
+dashboard
+golden
+docs
+design-spec.md
+*.md
+!README.md

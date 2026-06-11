@@ -49,6 +49,27 @@ agent status   # should show "Logged in as ..."
 
 Useful commands: `paperclipai doctor`, `paperclipai configure`.
 
+## Deploy (Cloudflare)
+
+The API deploys to [Cloudflare Containers](https://developers.cloudflare.com/containers/) via Wrangler. The deploy command builds the Docker image, pushes it, and **exits** — do not use `make run` in CI.
+
+**Prerequisites:** Docker running locally, Cloudflare account (`npx wrangler login`).
+
+```bash
+make install-worker   # npm ci — installs wrangler
+make deploy           # npx wrangler deploy
+```
+
+**Cloudflare Workers Builds settings:**
+
+| Field | Command |
+|-------|---------|
+| Build command | `npm ci` |
+| Deploy command | `npx wrangler deploy` |
+| Version command | `npx wrangler versions upload` (optional) |
+
+Local dev remains `make run` (uvicorn on port 8000).
+
 ## Development
 
 ```bash

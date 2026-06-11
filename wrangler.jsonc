@@ -1,0 +1,32 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "web4ai",
+  "main": "src/index.ts",
+  "compatibility_date": "2025-05-23",
+  "compatibility_flags": ["nodejs_compat"],
+  "observability": {
+    "enabled": true
+  },
+  "containers": [
+    {
+      "class_name": "Backend",
+      "image": "./Dockerfile",
+      "max_instances": 10,
+      "name": "web4ai-api"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "class_name": "Backend",
+        "name": "BACKEND"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "new_sqlite_classes": ["Backend"],
+      "tag": "v1"
+    }
+  ]
+}
