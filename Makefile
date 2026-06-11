@@ -1,4 +1,4 @@
-.PHONY: install install-dev install-worker lint test test-integration dashboard ci run deploy
+.PHONY: install install-dev install-worker lint test test-integration dashboard ci run serve deploy
 
 install:
 	uv sync
@@ -26,10 +26,13 @@ dashboard:
 ci: lint test
 
 run:
-	uv run uvicorn web4ai.api.app:app --reload --host 0.0.0.0 --port 8000
+	uv run web4ai dev
+
+serve:
+	uv run web4ai serve
 
 install-worker:
 	npm ci
 
 deploy:
-	npx wrangler deploy
+	npm run deploy

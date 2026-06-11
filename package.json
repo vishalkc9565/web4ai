@@ -4,8 +4,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "build": "npm ci",
     "deploy": "wrangler deploy",
-    "dev": "wrangler dev",
+    "preview": "wrangler versions upload",
+    "dev:cf": "wrangler dev",
+    "dev:api": "uv run web4ai dev",
     "cf-typegen": "wrangler types"
   },
   "dependencies": {

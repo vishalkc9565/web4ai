@@ -4,6 +4,8 @@ WORKDIR /app
 
 ENV UV_COMPILE_BYTECODE=1
 ENV UV_LINK_MODE=copy
+ENV WEB4AI_HOST=10.0.0.1
+ENV WEB4AI_PORT=8080
 
 COPY pyproject.toml uv.lock README.md ./
 RUN --mount=type=cache,target=/root/.cache/uv \
@@ -20,4 +22,4 @@ ENV PATH="/app/.venv/bin:$PATH"
 ENTRYPOINT []
 
 EXPOSE 8080
-CMD ["uvicorn", "web4ai.api.app:app", "--host", "10.0.0.1", "--port", "8080"]
+CMD ["web4ai", "serve"]

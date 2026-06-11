@@ -6,7 +6,7 @@ Extract clean Markdown and structured action sets from any URL — built for AI 
 
 ```bash
 make install-dev
-make run
+make run          # web4ai dev — reload on :8000
 ```
 
 ```bash
@@ -51,22 +51,29 @@ Useful commands: `paperclipai doctor`, `paperclipai configure`.
 
 ## Deploy (Cloudflare)
 
-The API deploys to [Cloudflare Containers](https://developers.cloudflare.com/containers/) via Wrangler. The deploy command builds the Docker image, pushes it, and **exits** — do not use `make run` in CI.
+The API runs in a [Cloudflare Container](https://developers.cloudflare.com/containers/) behind a Worker proxy. A TypeScript Worker (`worker/index.ts`) routes traffic; the FastAPI app starts inside the container via `web4ai serve` on `10.0.0.1:8080`.
+
+| Mode | Command | Listens on |
+|------|---------|------------|
+| Local dev | `make run` / `web4ai dev` | `0.0.0.0:8000` (reload) |
+| Local prod-like | `make serve` / `web4ai serve` | `WEB4AI_HOST`:`WEB4AI_PORT` (default `0.0.0.0:8000`) |
+| Container / CF | `web4ai serve` in Docker | `10.0.0.1:8080` |
+| Cloudflare edge | `npm run deploy` | Worker URL → container |
 
 **Prerequisites:** Docker running locally, Cloudflare account (`npx wrangler login`).
 
 ```bash
-make install-worker   # npm ci — installs wrangler
-make deploy           # npx wrangler deploy
+make install-worker   # npm ci
+make deploy           # npm run deploy → wrangler deploy
 ```
 
 **Cloudflare Workers Builds settings:**
 
 | Field | Command |
 |-------|---------|
-| Build command | `npm ci` |
-| Deploy command | `npx wrangler deploy` |
-| Version command | `npx wrangler versions upload` (optional) |
+| Build command | `npm run build` (or `npm ci`) |
+| Deploy command | `npm run deploy` |
+| Version command | `npm run preview` |
 
 **Workers Builds auth (fixes `Unauthorized` after Docker build):**
 
@@ -78,7 +85,7 @@ make deploy           # npx wrangler deploy
 3. `account_id` is already set in `wrangler.jsonc`. Optionally add a build env var `CLOUDFLARE_ACCOUNT_ID=ffcd10abbf1a2bd9ee843c60f1540599`.
 4. **Containers require a Workers Paid plan** — Free plan deploys fail at the push step with a generic auth error.
 
-Local dev remains `make run` (uvicorn on port 8000).
+Never use `make run` or `web4ai dev` in CI — those block with reload enabled.
 
 ## Development
 
