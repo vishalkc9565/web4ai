@@ -68,6 +68,16 @@ make deploy           # npx wrangler deploy
 | Deploy command | `npx wrangler deploy` |
 | Version command | `npx wrangler versions upload` (optional) |
 
+**Workers Builds auth (fixes `Unauthorized` after Docker build):**
+
+1. Open your Worker → **Settings → Build → API token**.
+2. Click **Create new token** (or select a custom token with these permissions):
+   - Account → **Workers Scripts** → Edit
+   - Account → **Containers** → Edit
+   - User → **Memberships** → Read
+3. `account_id` is already set in `wrangler.jsonc`. Optionally add a build env var `CLOUDFLARE_ACCOUNT_ID=ffcd10abbf1a2bd9ee843c60f1540599`.
+4. **Containers require a Workers Paid plan** — Free plan deploys fail at the push step with a generic auth error.
+
 Local dev remains `make run` (uvicorn on port 8000).
 
 ## Development

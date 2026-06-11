@@ -1,6 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "web4ai",
+  "account_id": "ffcd10abbf1a2bd9ee843c60f1540599",
   "main": "src/index.ts",
   "compatibility_date": "2025-05-23",
   "compatibility_flags": ["nodejs_compat"],
