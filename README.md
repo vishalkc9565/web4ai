@@ -21,6 +21,34 @@ curl -s -X POST http://localhost:8000/v1/extract \
 - `GET /health` — health check
 - `GET /docs` — OpenAPI spec (Swagger UI)
 
+## Paperclip
+
+This project can be managed with [Paperclip](https://paperclip.ing) (local agent orchestration).
+
+**First-time setup:**
+
+```bash
+npx paperclipai onboard --yes
+```
+
+**Start the server:**
+
+```bash
+npx paperclipai run
+```
+
+- Dashboard: http://127.0.0.1:3100
+- API health: http://127.0.0.1:3100/api/health
+
+Agents using the Cursor adapter need CLI auth once per machine:
+
+```bash
+agent login
+agent status   # should show "Logged in as ..."
+```
+
+Useful commands: `paperclipai doctor`, `paperclipai configure`.
+
 ## Development
 
 ```bash
